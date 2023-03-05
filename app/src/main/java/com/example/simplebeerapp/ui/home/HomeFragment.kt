@@ -48,7 +48,7 @@ class HomeFragment : Fragment(), BeerAdapterClockListener {
         }
 
         homeViewModel.beerList.observe(viewLifecycleOwner) { beerList ->
-            adapter.getBeerList(beerList)
+            adapter.configureList(beerList)
             if (beerList.isEmpty()) {
                 insertDataToDatabase()
             }
