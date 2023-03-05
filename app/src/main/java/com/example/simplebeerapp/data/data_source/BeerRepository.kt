@@ -12,6 +12,10 @@ class BeerRepository(private val db: BeerDB) {
         return dao.getBeers()
     }
 
+    suspend fun getBeersByType(type: Int): List<Beer> {
+        return dao.getBeersByType(type)
+    }
+
     suspend fun getFavBeers(): List<Beer> {
         return dao.getFavBeers()
     }
