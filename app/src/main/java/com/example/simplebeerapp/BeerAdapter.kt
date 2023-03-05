@@ -9,38 +9,36 @@ import com.example.simplebeerapp.databinding.ItemBeerBinding
 import com.example.simplebeerapp.ui.home.HomeViewModel
 
 class BeerAdapter(val clickListener: BeerAdapterClockListener) : RecyclerView.Adapter<BeerAdapter.ViewHolder>() {
-
-    private lateinit var binding: ItemBeerBinding
     var beerList: List<Beer> = emptyList()
 
-    inner class ViewHolder(binding: ItemBeerBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class ViewHolder(val binding: ItemBeerBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun configureView(item: Beer) {
+            binding.tvTitle.text = item.name
+            binding.tvPrice.text = "Цена от ${item.cost}р."
+            binding.checkBox.isChecked = item.isFavorite
+
+            binding.checkBox.setOnClickListener {
+                item.isFavorite = !item.isFavorite
+                item.id?.let {
+                    clickListener.checkBoxUpdate(it)
+                }
+            }
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        binding = ItemBeerBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemBeerBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
     override fun getItemCount(): Int = beerList.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        binding.tvTitle.text = beerList[position].name
-        binding.tvPrice.text = "Цена от ${beerList[position].cost}р."
-        binding.checkBox.isChecked = beerList[position].isFavorite
 
-        binding.checkBox.setOnClickListener {
-            beerList[position].isFavorite = !beerList[position].isFavorite
-            beerList[position].id?.let {
-                clickListener.checkBoxUpdate(it)
-            }
-        }
-
-/*        binding.deleteButton.setOnClickListener {
-
-            notifyDataSetChanged()
-        }*/
+        holder.configureView(beerList[position])
     }
 
-    fun getBeerList(beerList: List<Beer>) {
+    fun configureList(beerList: List<Beer>) {
         this.beerList = beerList
         notifyDataSetChanged()
     }

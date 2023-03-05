@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.simplebeerapp.BeerAdapter
 import com.example.simplebeerapp.BeerAdapterClockListener
+import com.example.simplebeerapp.R
 import com.example.simplebeerapp.data.data_source.BeerDB
 import com.example.simplebeerapp.data.model.Beer
 import com.example.simplebeerapp.data.model.beers
@@ -40,26 +41,25 @@ class HomeFragment : Fragment(), BeerAdapterClockListener {
         var chosenBeerType: Int = 0
         binding.radioGroup.setOnCheckedChangeListener { _, id ->
             when (id) {
-                0 -> homeViewModel.beerList.value?.let { homeViewModel.filterBeers(it, 1) }
-                1 -> homeViewModel.beerList.value?.let { homeViewModel.filterBeers(it, 2) }
-                2 -> homeViewModel.beerList.value?.let { homeViewModel.filterBeers(it, 3) }
+                R.id.rb1 -> homeViewModel.filterBeers(1)
+                R.id.rb2 -> homeViewModel.filterBeers(2)
+                R.id.rb3 -> homeViewModel.filterBeers(3)
             }
         }
 
-        homeViewModel.beerList.observe(viewLifecycleOwner) {
-            beerList -> adapter.getBeerList(beerList)
+        homeViewModel.beerList.observe(viewLifecycleOwner) { beerList ->
+            adapter.configureList(beerList)
+            if (beerList.isEmpty()) {
+                insertDataToDatabase()
+            }
         }
 
         return binding.root
     }
 
     fun insertDataToDatabase() {
-        if (homeViewModel.beerList.value == null) {
-            for (i in beers) {
-                homeViewModel.addBeerCor(i)
-            }
-        } else {
-
+        for (i in beers) {
+            homeViewModel.addBeerCor(i)
         }
     }
 

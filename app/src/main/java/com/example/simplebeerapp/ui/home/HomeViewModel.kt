@@ -22,13 +22,19 @@ class HomeViewModel() : ViewModel() {
 
     }
 
-    fun filterBeers(list: List<Beer>, beerType: Int){
+    fun filterBeers(beerType: Int) {
         if (beerType == 0) return
-        _beerList.value =  list.filter { it.beerType == beerType }
+        viewModelScope.launch(Dispatchers.IO) {
+            val beers = repository.getBeersByType(beerType)
+            _beerList.postValue(beers)
+        }
     }
 
-    fun getAllBeer() = viewModelScope.launch(Dispatchers.IO) {
-        _beerList.postValue(repository.getBeers())
+    fun getAllBeer() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val beers = repository.getBeers()
+            _beerList.postValue(beers)
+        }
     }
 
     fun addBeerCor(beer: Beer) {
@@ -39,7 +45,7 @@ class HomeViewModel() : ViewModel() {
 
     fun updateDB(id: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            _beerList.value?.first { it.id == id }?.let { repository.updateBeer(it)}
+            _beerList.value?.first { it.id == id }?.let { repository.updateBeer(it) }
         }
     }
 

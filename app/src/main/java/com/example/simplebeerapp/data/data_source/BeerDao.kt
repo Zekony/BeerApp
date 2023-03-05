@@ -11,10 +11,13 @@ interface BeerDao {
     suspend fun addBeer(beer: Beer)
 
     @Query("SELECT * FROM BeerTable")
-    fun getBeers(): List<Beer>
+    suspend fun getBeers(): List<Beer>
 
     @Query("SELECT * FROM BeerTable WHERE isFavorite = :isFavorite")
-    fun getFavBeers(isFavorite: Boolean = true): List<Beer>
+    suspend fun getFavBeers(isFavorite: Boolean = true): List<Beer>
+
+    @Query("SELECT * FROM BeerTable WHERE beerType = :type")
+    suspend fun getBeersByType(type: Int): List<Beer>
 
     @Query("SELECT * FROM BeerTable WHERE id = :id")
     suspend fun getBeerById(id: Int): Beer?
