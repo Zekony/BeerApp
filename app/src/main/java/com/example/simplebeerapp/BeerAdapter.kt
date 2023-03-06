@@ -1,26 +1,30 @@
 package com.example.simplebeerapp
 
 import android.view.LayoutInflater
-import android.view.View.OnClickListener
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.simplebeerapp.data.model.Beer
 import com.example.simplebeerapp.databinding.ItemBeerBinding
-import com.example.simplebeerapp.ui.home.HomeViewModel
 
-class BeerAdapter(val clickListener: BeerAdapterClockListener) : RecyclerView.Adapter<BeerAdapter.ViewHolder>() {
+class BeerAdapter(val clickListener: BeerAdapterClockListener) :
+    RecyclerView.Adapter<BeerAdapter.ViewHolder>() {
     var beerList: List<Beer> = emptyList()
 
-    inner class ViewHolder(val binding: ItemBeerBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(private val binding: ItemBeerBinding) : RecyclerView.ViewHolder(binding.root) {
         fun configureView(item: Beer) {
             binding.tvTitle.text = item.name
-            binding.tvPrice.text = "Цена от ${item.cost}р."
+            binding.tvPrice.text = item.cost.toString()
             binding.checkBox.isChecked = item.isFavorite
 
             binding.checkBox.setOnClickListener {
                 item.isFavorite = !item.isFavorite
                 item.id?.let {
                     clickListener.checkBoxUpdate(it)
+                }
+            }
+            binding.root.setOnClickListener {
+                item.id?.let {
+                    clickListener.navigateTo(it)
                 }
             }
         }
@@ -34,7 +38,6 @@ class BeerAdapter(val clickListener: BeerAdapterClockListener) : RecyclerView.Ad
     override fun getItemCount(): Int = beerList.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
         holder.configureView(beerList[position])
     }
 

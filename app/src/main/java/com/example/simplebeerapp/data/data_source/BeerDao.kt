@@ -1,6 +1,5 @@
 package com.example.simplebeerapp.data.data_source
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.simplebeerapp.data.model.Beer
 

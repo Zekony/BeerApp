@@ -35,6 +35,16 @@
         app:layout_constraintTop_toBottomOf="@+id/text_home">
 
         <RadioButton
+            android:id="@+id/rbNoFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_filter"
+            android:checked="true"
+            app:layout_constraintEnd_toStartOf="@id/rb2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_home" />
+
+        <RadioButton
             android:id="@+id/rb1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

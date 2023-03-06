@@ -10,7 +10,7 @@ import com.example.simplebeerapp.data.model.Beer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class HomeViewModel() : ViewModel() {
+class HomeViewModel : ViewModel() {
 
     private lateinit var repository: BeerRepository
 
@@ -23,10 +23,16 @@ class HomeViewModel() : ViewModel() {
     }
 
     fun filterBeers(beerType: Int) {
-        if (beerType == 0) return
-        viewModelScope.launch(Dispatchers.IO) {
-            val beers = repository.getBeersByType(beerType)
-            _beerList.postValue(beers)
+        if (beerType == 0) {
+            viewModelScope.launch(Dispatchers.IO) {
+                val beers = repository.getBeers()
+                _beerList.postValue(beers)
+            }
+        } else {
+            viewModelScope.launch(Dispatchers.IO) {
+                val beers = repository.getBeersByType(beerType)
+                _beerList.postValue(beers)
+            }
         }
     }
 
