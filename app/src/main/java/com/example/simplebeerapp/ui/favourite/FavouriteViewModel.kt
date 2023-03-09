@@ -1,4 +1,4 @@
-package com.example.simplebeerapp.ui.home
+package com.example.simplebeerapp.ui.favourite
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,7 +10,8 @@ import com.example.simplebeerapp.data.model.Beer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class HomeViewModel : ViewModel() {
+class FavouriteViewModel : ViewModel() {
+
 
     private lateinit var repository: BeerRepository
 
@@ -21,30 +22,10 @@ class HomeViewModel : ViewModel() {
         repository = BeerRepository(db)
     }
 
-    fun filterBeers(beerType: Int) {
-        if (beerType == 0) {
-            viewModelScope.launch(Dispatchers.IO) {
-                val beers = repository.getBeers()
-                _beerList.postValue(beers)
-            }
-        } else {
-            viewModelScope.launch(Dispatchers.IO) {
-                val beers = repository.getBeersByType(beerType)
-                _beerList.postValue(beers)
-            }
-        }
-    }
-
-    fun getAllBeer() {
+    fun getFavBeer() {
         viewModelScope.launch(Dispatchers.IO) {
-            val beers = repository.getBeers()
+            val beers = repository.getFavBeers()
             _beerList.postValue(beers)
-        }
-    }
-
-    fun addBeerCor(beer: Beer) {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.addBeer(beer)
         }
     }
 

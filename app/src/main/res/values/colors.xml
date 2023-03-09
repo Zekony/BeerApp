@@ -7,4 +7,11 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="snow4">#6B6D6D</color>
+    <color name="snow3">#cdc9c9</color>
+    <color name="snow2">#eee9e9</color>
+    <color name="LightSlateBlue">#8470ff</color>
+    <color name="SlateBlue">#6a5acd</color>
+    <color name="MediumSlateBlue">#7b68ee</color>
+    <color name="bottom_nav">#8b8989</color>
 </resources>

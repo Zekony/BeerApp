@@ -13,17 +13,18 @@ class BeerAdapter(val clickListener: BeerAdapterClockListener) :
     inner class ViewHolder(private val binding: ItemBeerBinding) : RecyclerView.ViewHolder(binding.root) {
         fun configureView(item: Beer) {
             binding.tvTitle.text = item.name
-            binding.tvPrice.text = item.cost.toString()
+            binding.tvPrice.text = "Цена от ${item.cost.toString()}р."
             binding.checkBox.isChecked = item.isFavorite
 
             binding.checkBox.setOnClickListener {
                 item.isFavorite = !item.isFavorite
-                item.id?.let {
+                item.id.let {
                     clickListener.checkBoxUpdate(it)
                 }
             }
+
             binding.root.setOnClickListener {
-                item.id?.let {
+                item.id.let {
                     clickListener.navigateTo(it)
                 }
             }

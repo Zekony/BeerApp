@@ -24,6 +24,9 @@
         <string name="inneressence">Пиво сварено в стиле Smoothie Sour Ale, с насыщенным ягодно-фруктовым вкусом, который достигается за счёт добавления пюре ежевики, яблока, ананаса и маракуйи. Этот эль не так прост, как кажется, поэтому раскрыть его истинную сущность подвластно лишь самым проницаемым.
 </string>
     <string name="no_filter">No filter</string>
+    <string name="favourite">Favourite</string>
+    <string name="price">Price</string>
+    <string name="title">Title</string>
 
 
 </resources>
