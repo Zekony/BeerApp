@@ -2,7 +2,7 @@
     <string name="app_name">SimpleBeerApp</string>
     <string name="title_home">Меню</string>
     <string name="title_dashboard">Избранное</string>
-    <string name="title_notifications">Профиль</string>
+    <string name="title_snacks">Закуски</string>
     <string name="homeFrag_tv">Добро пожаловать в наш BeerApp! Здесь вы сможете найти только лучшее пиво на любой вкус!</string>
     <string name="kozel_info">
     Темное пиво глубокого коричневого цвета с рубиновым отливом. Обладает пышной кремообразной пеной с пузырьками. Имеет мягкий хлебный вкус с нотками жженого солода и карамели, присутствует ненавязчивая сладость.</string>
@@ -27,6 +27,7 @@
     <string name="favourite">Favourite</string>
     <string name="price">Price</string>
     <string name="title">Title</string>
+    <string name="noFavBeer">У вас ещё нет любимого пива Пожалуйста выберите любимое пиво в меню!</string>
 
 
 </resources>

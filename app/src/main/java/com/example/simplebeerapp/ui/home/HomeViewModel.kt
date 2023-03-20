@@ -48,9 +48,15 @@ class HomeViewModel : ViewModel() {
         }
     }
 
-    fun updateDB(id: Int) {
+    fun updateDB(id: Int, isFavorite: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
-            _beerList.value?.first { it.id == id }?.let { repository.updateBeer(it) }
+            _beerList.value?.first {
+                it.id == id
+            }?.let {
+                it.isFavorite = isFavorite
+                repository.updateBeer(it)
+            }
         }
     }
+
 }

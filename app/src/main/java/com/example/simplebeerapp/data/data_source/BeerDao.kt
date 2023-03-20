@@ -2,10 +2,12 @@ package com.example.simplebeerapp.data.data_source
 
 import androidx.room.*
 import com.example.simplebeerapp.data.model.Beer
+import com.example.simplebeerapp.data.model.Snack
 
 @Dao
 interface BeerDao {
 
+    //beer methods
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addBeer(beer: Beer)
 
@@ -27,4 +29,13 @@ interface BeerDao {
     @Delete
     suspend fun deleteBeer(beer: Beer)
 
+    //snack methods
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun addSnack(snack: Snack)
+
+    @Query("SELECT * FROM SnackTable")
+    suspend fun getSnacks(): List<Snack>
+
+    @Query("DELETE FROM SnackTable")
+    suspend fun deleteAllSnacks()
 }

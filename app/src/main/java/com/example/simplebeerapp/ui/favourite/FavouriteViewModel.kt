@@ -12,7 +12,6 @@ import kotlinx.coroutines.launch
 
 class FavouriteViewModel : ViewModel() {
 
-
     private lateinit var repository: BeerRepository
 
     private val _beerList = MutableLiveData<List<Beer>>()
@@ -29,9 +28,14 @@ class FavouriteViewModel : ViewModel() {
         }
     }
 
-    fun updateDB(id: Int) {
+    fun updateDB(id: Int, isFavorite: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
-            _beerList.value?.first { it.id == id }?.let { repository.updateBeer(it) }
+            _beerList.value?.first { it.id == id
+            }?.let {
+                it.isFavorite = isFavorite
+                repository.updateBeer(it)
+            }
+            getFavBeer()
         }
     }
 }
