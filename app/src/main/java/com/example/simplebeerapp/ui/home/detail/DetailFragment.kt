@@ -14,16 +14,14 @@ class DetailFragment : Fragment() {
 
     private val safeArgs: DetailFragmentArgs by navArgs()
 
-    companion object {
-        var BEER_ID = "beerId"
-    }
-
     private var beerId = 0
+    private var beerName = ""
 
     private var _binding: FragmentDetailBinding? = null
     private val binding get() = _binding!!
 
     private val viewModel: DetailViewModel by viewModels()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -47,6 +45,7 @@ class DetailFragment : Fragment() {
                 imageView.setImageResource(it.imageResource)
                 textView.text = it.name
                 textView2.text = getString(it.info)
+                beerName = it.name
             }
         }
     }

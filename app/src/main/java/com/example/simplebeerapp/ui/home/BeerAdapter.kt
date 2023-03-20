@@ -1,49 +1,54 @@
-package com.example.simplebeerapp
+package com.example.simplebeerapp.ui.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.simplebeerapp.data.model.Beer
 import com.example.simplebeerapp.databinding.ItemBeerBinding
 
 class BeerAdapter(val clickListener: BeerAdapterClockListener) :
     RecyclerView.Adapter<BeerAdapter.ViewHolder>() {
-    var beerList: List<Beer> = emptyList()
 
     inner class ViewHolder(private val binding: ItemBeerBinding) : RecyclerView.ViewHolder(binding.root) {
         fun configureView(item: Beer) {
             binding.tvTitle.text = item.name
-            binding.tvPrice.text = "Цена от ${item.cost.toString()}р."
+            binding.tvPrice.text = "Цена от ${item.cost.toString()} ₽"
             binding.checkBox.isChecked = item.isFavorite
 
             binding.checkBox.setOnClickListener {
-                item.isFavorite = !item.isFavorite
+                val isFavorite = !item.isFavorite
                 item.id.let {
-                    clickListener.checkBoxUpdate(it)
+                    clickListener.checkBoxUpdate(it, isFavorite)
                 }
             }
-
             binding.root.setOnClickListener {
                 item.id.let {
-                    clickListener.navigateTo(it)
+                    clickListener.navigateTo(it, item.name)
                 }
             }
         }
     }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemBeerBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
-
-    override fun getItemCount(): Int = beerList.size
-
+    override fun getItemCount(): Int = differ.currentList.size
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.configureView(beerList[position])
+        holder.configureView(differ.currentList[position])
     }
 
-    fun configureList(beerList: List<Beer>) {
-        this.beerList = beerList
-        notifyDataSetChanged()
+    private val differCallBack = object :
+        DiffUtil.ItemCallback<Beer>(){
+        override fun areItemsTheSame(oldItem: Beer, newItem: Beer): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: Beer, newItem: Beer): Boolean {
+            return oldItem == newItem
+        }
     }
+    val differ = AsyncListDiffer(this, differCallBack)
 }
+

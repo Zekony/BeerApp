@@ -8,7 +8,7 @@ import com.example.simplebeerapp.data.model.Beer
 
 @Database(
     entities = [Beer::class],
-    version = 5
+    version = 6
 )
 abstract class BeerDB: RoomDatabase() {
 
