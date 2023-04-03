@@ -5,23 +5,20 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.simplebeerapp.data.data_source.BeerDB
 import com.example.simplebeerapp.data.data_source.BeerRepository
-import com.example.simplebeerapp.data.model.Beer
+import com.example.simplebeerapp.data.entities.Beer
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class DetailViewModel : ViewModel() {
+@HiltViewModel
+class DetailViewModel @Inject constructor(private val repository: BeerRepository) : ViewModel() {
 
-    private lateinit var repository: BeerRepository
+
 
     private val _beer = MutableLiveData<Beer>()
-    var beer: LiveData<Beer> = _beer
-
-    fun init(db: BeerDB) {
-        repository = BeerRepository(db)
-
-    }
+    val beer: LiveData<Beer> = _beer
 
     fun getBeerById(id: Int) {
         viewModelScope.launch(Dispatchers.IO) {

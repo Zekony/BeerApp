@@ -4,8 +4,9 @@ import com.example.simplebeerapp.data.network.SimpleResponse
 import com.example.simplebeerapp.data.network.bodies.SnacksAPIList
 import com.example.simplebeerapp.data.network.bodies.GetSnackById
 import retrofit2.Response
+import javax.inject.Inject
 
-class ApiClient(private val service: API_service) {
+class ApiClient @Inject constructor(private val service: APIservice) {
 
     suspend fun getAllSnacks(): SimpleResponse<SnacksAPIList> {
         return safeApiCall { service.getAllSnacks() }

@@ -8,7 +8,7 @@ import com.example.simplebeerapp.data.network.responses.SnackResponse
 import retrofit2.Response
 import retrofit2.http.*
 
-interface API_service {
+interface APIservice {
 
     @GET ("beverages")
     suspend fun getAllBeer(): Response<BeerApiList>

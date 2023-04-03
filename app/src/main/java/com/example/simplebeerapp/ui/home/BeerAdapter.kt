@@ -5,10 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.simplebeerapp.data.model.Beer
+import com.example.simplebeerapp.data.entities.Beer
 import com.example.simplebeerapp.databinding.ItemBeerBinding
 
-class BeerAdapter(val clickListener: BeerAdapterClockListener) :
+class BeerAdapter (val clickListener: BeerAdapterClockListener) :
     RecyclerView.Adapter<BeerAdapter.ViewHolder>() {
 
     inner class ViewHolder(private val binding: ItemBeerBinding) : RecyclerView.ViewHolder(binding.root) {

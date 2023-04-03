@@ -1,8 +1,8 @@
 package com.example.simplebeerapp.data.data_source
 
 import androidx.room.*
-import com.example.simplebeerapp.data.model.Beer
-import com.example.simplebeerapp.data.model.Snack
+import com.example.simplebeerapp.data.entities.Beer
+import com.example.simplebeerapp.data.entities.Snack
 
 @Dao
 interface BeerDao {
@@ -18,7 +18,7 @@ interface BeerDao {
     suspend fun getFavBeers(): List<Beer>
 
     @Query("SELECT * FROM BeerTable WHERE beerType = :type")
-    suspend fun getBeersByType(type: Int): List<Beer>
+    suspend fun getBeersByType(type: String): List<Beer>
 
     @Query("SELECT * FROM BeerTable WHERE id = :id")
     suspend fun getBeerById(id: Int): Beer?

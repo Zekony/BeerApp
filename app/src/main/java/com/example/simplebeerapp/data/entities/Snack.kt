@@ -1,4 +1,4 @@
-package com.example.simplebeerapp.data.model
+package com.example.simplebeerapp.data.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

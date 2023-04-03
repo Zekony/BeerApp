@@ -12,7 +12,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.simplebeerapp.data.data_source.BeerDB
 import com.example.simplebeerapp.databinding.FragmentSnacksBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SnacksFragment : Fragment(), SnackClickListener {
 
     private var _binding: FragmentSnacksBinding? = null
@@ -32,7 +34,6 @@ class SnacksFragment : Fragment(), SnackClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         snacksViewModel.apply {
-            init(BeerDB.getBeerDatabase(requireContext()))
             getSnacksFromApi()
         }
 
@@ -44,7 +45,7 @@ class SnacksFragment : Fragment(), SnackClickListener {
         binding.snacksRV.layoutManager = GridLayoutManager(requireContext(), 2)
 
         snacksViewModel.snacksLiveData.observe(viewLifecycleOwner) { snacksList ->
-            if (snacksList == null) {
+            if (snacksList == null || snacksList.isEmpty()) {
                 Toast.makeText(
                     requireContext(),
                     "Unsuccessful network call!",
@@ -52,9 +53,7 @@ class SnacksFragment : Fragment(), SnackClickListener {
                 ).show()
                 return@observe
             }
-            if (snacksList.isNotEmpty()) {
-                adapter.differ.submitList(snacksList)
-            }
+            adapter.differ.submitList(snacksList)
             binding.progressBar.isVisible = false
         }
     }

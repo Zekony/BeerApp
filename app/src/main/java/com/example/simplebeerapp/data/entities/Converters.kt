@@ -1,4 +1,4 @@
-package com.example.simplebeerapp.data.model
+package com.example.simplebeerapp.data.entities
 
 import com.example.simplebeerapp.data.network.bodies.Data
 

@@ -9,7 +9,9 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.example.simplebeerapp.data.data_source.BeerDB
 import com.example.simplebeerapp.databinding.FragmentDetailBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DetailFragment : Fragment() {
 
     private val safeArgs: DetailFragmentArgs by navArgs()
@@ -35,10 +37,7 @@ class DetailFragment : Fragment() {
 
         beerId = safeArgs.id
 
-        viewModel.apply {
-            init(BeerDB.getBeerDatabase(requireContext()))
-            getBeerById(beerId)
-        }
+        viewModel.getBeerById(beerId)
 
         viewModel.beer.observe(viewLifecycleOwner) {
             binding.apply {

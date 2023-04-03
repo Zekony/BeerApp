@@ -37,35 +37,35 @@
             android:layout_height="wrap_content"
             android:checked="true"
             android:text="@string/no_filter"
-            app:layout_constraintEnd_toStartOf="@id/rb2"
+            app:layout_constraintEnd_toStartOf="@id/rb_LightBeer"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_home" />
 
         <RadioButton
-            android:id="@+id/rb1"
+            android:id="@+id/rb_DarkBeer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/dark"
-            app:layout_constraintEnd_toStartOf="@id/rb2"
+            app:layout_constraintEnd_toStartOf="@id/rb_LightBeer"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_home" />
 
         <RadioButton
-            android:id="@+id/rb2"
+            android:id="@+id/rb_LightBeer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/light"
-            app:layout_constraintEnd_toStartOf="@id/rb3"
-            app:layout_constraintStart_toEndOf="@+id/rb1"
+            app:layout_constraintEnd_toStartOf="@id/rb_IpaBeer"
+            app:layout_constraintStart_toEndOf="@+id/rb_DarkBeer"
             app:layout_constraintTop_toBottomOf="@+id/text_home" />
 
         <RadioButton
-            android:id="@+id/rb3"
+            android:id="@+id/rb_IpaBeer"
             android:layout_width="65dp"
             android:layout_height="wrap_content"
             android:text="@string/ipa"
             app:layout_constraintEnd_toStartOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/rb2"
+            app:layout_constraintStart_toEndOf="@+id/rb_LightBeer"
             app:layout_constraintTop_toBottomOf="@+id/text_home" />
 
     </RadioGroup>

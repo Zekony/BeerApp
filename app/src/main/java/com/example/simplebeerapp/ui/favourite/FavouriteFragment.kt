@@ -13,7 +13,9 @@ import com.example.simplebeerapp.data.data_source.BeerDB
 import com.example.simplebeerapp.databinding.FragmentFavBinding
 import com.example.simplebeerapp.ui.home.BeerAdapter
 import com.example.simplebeerapp.ui.home.BeerAdapterClockListener
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FavouriteFragment : Fragment(), BeerAdapterClockListener {
 
     private var _binding: FragmentFavBinding? = null
@@ -36,7 +38,6 @@ class FavouriteFragment : Fragment(), BeerAdapterClockListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        favViewModel.init(BeerDB.getBeerDatabase(requireContext()))
         favViewModel.getFavBeer()
 
         binding.recyclerBeerList.adapter = adapter

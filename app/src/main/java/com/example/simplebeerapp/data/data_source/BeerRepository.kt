@@ -1,24 +1,21 @@
 package com.example.simplebeerapp.data.data_source
 
 import android.util.Log
-import com.example.simplebeerapp.data.model.Beer
-import com.example.simplebeerapp.data.model.Snack
+import com.example.simplebeerapp.data.entities.Beer
+import com.example.simplebeerapp.data.entities.Snack
 import com.example.simplebeerapp.data.network.bodies.Data
 import com.example.simplebeerapp.data.network.bodies.GetSnackById
-import com.example.simplebeerapp.data.network.network_model.Network_layer
+import com.example.simplebeerapp.data.network.network_model.ApiClient
 
+import javax.inject.Inject
 
-class BeerRepository(db: BeerDB) {
-
-    private val dao: BeerDao = db.beerDao()
-
-    // DB functions
+class BeerRepository @Inject constructor(private val dao: BeerDao, private val apiClient: ApiClient) {
 
     suspend fun getBeers(): List<Beer> {
         return dao.getBeers()
     }
 
-    suspend fun getBeersByType(type: Int): List<Beer> {
+    suspend fun getBeersByType(type: String): List<Beer> {
         return dao.getBeersByType(type)
     }
 
@@ -57,12 +54,9 @@ class BeerRepository(db: BeerDB) {
 
     // API functions
 
-    suspend fun getAllSnacksAPI(): MutableList<Snack>? {
-        val request = Network_layer.apiClient.getAllSnacks()
-        val snackList = mutableListOf<Snack>()
-        for (i in request.body.data) {
-            snackList.add(snackBodyToSnack(i))
-        }
+    suspend fun getAllSnacksAPI(): List<Snack>? {
+        val request = apiClient.getAllSnacks()
+
         if (request.failed) {
             Log.d("API", "Request has failed!")
             return null
@@ -71,12 +65,15 @@ class BeerRepository(db: BeerDB) {
             Log.d("API", "Request was not successful!")
             return null
         }
+        val snackList = mutableListOf<Snack>()
+        for (i in request.body.data) {
+            snackList.add(snackBodyToSnack(i))
+        }
         if (request.isSuccessful) {
             Log.d("API", "Request was successful!")
             if (request.body.data.isEmpty()) {
                 Log.d("API", "Request was successful, but list is empty!")
             }
-
             return snackList
         }
         Log.d("API", "Request was... i don't know man!")
@@ -84,7 +81,7 @@ class BeerRepository(db: BeerDB) {
     }
 
     suspend fun getSnackById(id: String): GetSnackById? {
-        val request = Network_layer.apiClient.getSnackById(id)
+        val request = apiClient.getSnackById(id)
         if (request.failed) {
             Log.d("API", "Request has failed!")
             return null
@@ -100,7 +97,8 @@ class BeerRepository(db: BeerDB) {
         Log.d("API", "Request was... i don't know man!")
         return null
     }
-    fun snackBodyToSnack(snack: Data): Snack {
+
+    private fun snackBodyToSnack(snack: Data): Snack {
         return Snack(
             UID = snack.UID,
             name = snack.name,
@@ -109,4 +107,5 @@ class BeerRepository(db: BeerDB) {
             type = snack.type
         )
     }
+
 }
