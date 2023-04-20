@@ -1,5 +1,6 @@
 package com.example.simplebeerapp.data.entities
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -7,8 +8,12 @@ import androidx.room.PrimaryKey
 data class Snack(
     @PrimaryKey
     val UID: String,
-    val name: String,
-    val type: String,
     val price: Double,
-    val description: String
+    @ColumnInfo("image_path")
+    val imagePath: String?,
+    val name: String,
+    val description: String,
+    val weight: Int?,
+    val type: String,
+    val tags: String?,
 )

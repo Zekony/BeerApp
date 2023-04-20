@@ -6,7 +6,7 @@ import com.example.simplebeerapp.data.entities.Beer
 import com.example.simplebeerapp.data.entities.Snack
 
 @Database(
-    entities = [Beer::class, Snack::class], version = 10
+    entities = [Beer::class, Snack::class], version = 11
 )
 abstract class BeerDB : RoomDatabase() {
 
@@ -41,6 +41,22 @@ abstract class BeerDB : RoomDatabase() {
              )
          }
      }
+         val migration10to11 = object : Migration(10, 11) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            database.execSQL(
+                "ALTER TABLE SnackTable " +
+                        "ADD COLUMN tags TEXT"
+            )
+            database.execSQL(
+                "ALTER TABLE SnackTable " +
+                        " ADD COLUMN weight INTEGER"
+            )
+            database.execSQL(
+                "ALTER TABLE SnackTable " +
+                        " ADD COLUMN image_path TEXT"
+            )
+        }
+    }
              synchronized(this) {
                  val instance = Room.databaseBuilder(
                      context.applicationContext, BeerDB::class.java, "BeerTable"

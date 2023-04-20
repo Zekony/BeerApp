@@ -1,4 +1,4 @@
-package com.example.simplebeerapp.data.network.bodies
+package com.example.simplebeerapp.data.network.models.beer
 
 import com.squareup.moshi.Json
 

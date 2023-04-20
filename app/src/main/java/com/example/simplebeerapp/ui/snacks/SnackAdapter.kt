@@ -6,7 +6,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import coil.Coil
+import coil.request.ImageRequest
 import com.example.simplebeerapp.R
+import com.example.simplebeerapp.common.Constants
 import com.example.simplebeerapp.data.entities.Snack
 import com.example.simplebeerapp.databinding.ItemSnackBinding
 
@@ -17,9 +20,17 @@ class SnackAdapter(val clickListener: SnackClickListener) :
     inner class ViewHolder(private val binding: ItemSnackBinding) : RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
         fun configureView(item: Snack) {
+            val request = ImageRequest.Builder(binding.root.context)
+                .data(Constants.base_URL + item.imagePath)
+                .target(binding.infoImage)
+                .error(R.drawable.error_image)
+                .build()
+
+            Coil.imageLoader(binding.root.context).enqueue(request)
+
             binding.name.text = item.name
             binding.price.text = "${item.price.toString()} ₽"
-            binding.infoImage.setImageResource(R.drawable.kardimovskoe)
+            //binding.infoImage.setImageResource(R.drawable.kardimovskoe)
         }
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

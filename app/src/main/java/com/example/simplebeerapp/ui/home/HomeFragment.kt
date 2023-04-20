@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.simplebeerapp.R
 import com.example.simplebeerapp.data.entities.Beer.Companion.beers
 import com.example.simplebeerapp.databinding.FragmentHomeBinding
+import com.example.simplebeerapp.ui.core.BeerAdapterClockListener
+import com.example.simplebeerapp.ui.home.models.FilterBeerType
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -40,10 +42,10 @@ class HomeFragment : Fragment(), BeerAdapterClockListener {
 
         binding.radioGroup.setOnCheckedChangeListener { _, id ->
             when (id) {
-                R.id.rbNoFilter -> homeViewModel.filterBeers("")
-                R.id.rb_DarkBeer -> homeViewModel.filterBeers("Dark")
-                R.id.rb_LightBeer -> homeViewModel.filterBeers("Light")
-                R.id.rb_IpaBeer -> homeViewModel.filterBeers("IPA")
+                R.id.rbNoFilter -> homeViewModel.filterBeers(FilterBeerType.NONE)
+                R.id.rb_DarkBeer -> homeViewModel.filterBeers(FilterBeerType.DARK)
+                R.id.rb_LightBeer -> homeViewModel.filterBeers(FilterBeerType.LIGHT)
+                R.id.rb_IpaBeer -> homeViewModel.filterBeers(FilterBeerType.IPA)
             }
         }
         homeViewModel.beerList.observe(viewLifecycleOwner) { beerList ->

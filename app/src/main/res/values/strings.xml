@@ -28,6 +28,7 @@
     <string name="price">Price</string>
     <string name="title">Title</string>
     <string name="noFavBeer">У вас ещё нет любимого пива Пожалуйста выберите любимое пиво в меню!</string>
+    <string name="unsuccessful_call">Не удалось загрузить список закусок, попробовать еще раз?</string>
 
 
 </resources>

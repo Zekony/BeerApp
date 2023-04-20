@@ -1,31 +1,35 @@
-package com.example.simplebeerapp.data.network.network_model
+package com.example.simplebeerapp.data.network.service
 
+import android.media.Image
 import com.example.simplebeerapp.data.network.*
-import com.example.simplebeerapp.data.network.bodies.*
-import com.example.simplebeerapp.data.network.bodies.GetSnackById
+import com.example.simplebeerapp.data.network.models.*
+import com.example.simplebeerapp.data.network.models.snack.GetSnackById
+import com.example.simplebeerapp.data.network.models.beer.BeerApi
+import com.example.simplebeerapp.data.network.models.beer.BeerApiList
+import com.example.simplebeerapp.data.network.models.snack.SnacksAPIList
 import com.example.simplebeerapp.data.network.requests.SnackRequest
 import com.example.simplebeerapp.data.network.responses.SnackResponse
 import retrofit2.Response
 import retrofit2.http.*
 
-interface APIservice {
+interface ApiService {
 
-    @GET ("beverages")
+    @GET ("api/beverages")
     suspend fun getAllBeer(): Response<BeerApiList>
 
-    @GET ("snacks")
+    @GET ("api/snacks")
     suspend fun getAllSnacks(): Response<SnacksAPIList>
 
-    @GET ("beverages/{beerId}")
+    @GET ("api/beverages/{beerId}")
     suspend fun getBeerById(@Path ("beerId") beerId: String): Response<BeerApi>
 
-    @GET ("snacks/{snackId}")
+    @GET ("api/snacks/{snackId}")
     suspend fun getSnackById(@Path ("snackId") snackId: String): Response<GetSnackById>
 
-    @POST("snacks/add-snack")
+    @POST("api/snacks/add-snack")
     suspend fun addSnack(@Body snackRequest: SnackRequest): Response<SnackResponse>
 
-    @DELETE("snacks/{snackId}")
+    @DELETE("api/snacks/{snackId}")
     suspend fun deleteSnackById(@Path ("snackId") snackId: String ): Response<GetSnackById>
 }
 

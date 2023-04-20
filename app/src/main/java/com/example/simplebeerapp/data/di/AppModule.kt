@@ -2,13 +2,11 @@ package com.example.simplebeerapp.data.di
 
 import android.content.Context
 import androidx.room.Room
-import androidx.room.migration.Migration
-import androidx.sqlite.db.SupportSQLiteDatabase
+import com.example.simplebeerapp.common.Constants
 import com.example.simplebeerapp.data.data_source.BeerDB
 import com.example.simplebeerapp.data.data_source.BeerDao
-import com.example.simplebeerapp.data.network.network_model.APIservice
-import com.example.simplebeerapp.data.network.network_model.ApiClient
-import com.example.simplebeerapp.data.network.network_model.Network_layer
+import com.example.simplebeerapp.data.network.service.ApiService
+import com.example.simplebeerapp.data.network.service.ApiClient
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -26,8 +24,8 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideApiService(retrofit: Retrofit): APIservice {
-        return retrofit.create(APIservice::class.java)
+    fun provideApiService(retrofit: Retrofit): ApiService {
+        return retrofit.create(ApiService::class.java)
     }
 
     @Provides
@@ -35,7 +33,7 @@ object AppModule {
     fun providesRetrofit(moshi: Moshi): Retrofit {
         return Retrofit.Builder()
             .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .baseUrl(Network_layer.base_URL)
+            .baseUrl(Constants.base_URL)
             .build()
     }
 
@@ -44,7 +42,6 @@ object AppModule {
     fun providesMoshi(): Moshi {
         return Moshi.Builder().addLast(KotlinJsonAdapterFactory()).build()
     }
-
 
 
     @Provides
@@ -61,7 +58,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun providesApiClient(apiService: APIservice): ApiClient {
+    fun providesApiClient(apiService: ApiService): ApiClient {
         return ApiClient(apiService)
     }
 }

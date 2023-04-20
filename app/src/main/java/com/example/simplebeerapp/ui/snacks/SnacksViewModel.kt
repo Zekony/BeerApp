@@ -19,6 +19,7 @@ class SnacksViewModel @Inject constructor(private val repository: BeerRepository
     private val _snacksLiveData = MutableLiveData<List<Snack>?>()
     val snacksLiveData: LiveData<List<Snack>?> = _snacksLiveData
 
+
     fun getSnacksFromApi() {
         viewModelScope.launch(Dispatchers.IO) {
             var snackFromDB = repository.getSnacks()

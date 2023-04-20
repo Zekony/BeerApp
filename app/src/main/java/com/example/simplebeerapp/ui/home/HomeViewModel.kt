@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.simplebeerapp.data.data_source.BeerRepository
 import com.example.simplebeerapp.data.entities.Beer
+import com.example.simplebeerapp.ui.home.models.FilterBeerType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -17,17 +18,14 @@ class HomeViewModel @Inject constructor(private val repository: BeerRepository) 
     private val _beerList = MutableLiveData<List<Beer>>()
     var beerList: LiveData<List<Beer>> = _beerList
 
-    fun filterBeers(beerType: String) {
-        if (beerType == "") {
-            viewModelScope.launch(Dispatchers.IO) {
-                val beers = repository.getBeers()
-                _beerList.postValue(beers)
+
+    fun filterBeers(beerType: FilterBeerType) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val beers = when (beerType) {
+                FilterBeerType.NONE -> repository.getBeers()
+                else -> repository.getBeersByType(beerType.toRawString())
             }
-        } else {
-            viewModelScope.launch(Dispatchers.IO) {
-                val beers = repository.getBeersByType(beerType)
-                _beerList.postValue(beers)
-            }
+            _beerList.postValue(beers)
         }
     }
 

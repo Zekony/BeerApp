@@ -1,4 +1,4 @@
-package com.example.simplebeerapp.ui.home
+package com.example.simplebeerapp.ui.core
 
 interface BeerAdapterClockListener {
     fun checkBoxUpdate(id: Int, isFavorite: Boolean)

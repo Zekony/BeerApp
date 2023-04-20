@@ -4,13 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.simplebeerapp.data.data_source.BeerDB
 import com.example.simplebeerapp.databinding.FragmentSnacksBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -33,24 +31,29 @@ class SnacksFragment : Fragment(), SnackClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        snacksViewModel.apply {
-            getSnacksFromApi()
-        }
+        snacksViewModel.getSnacksFromApi()
 
         lifecycleScope.launchWhenCreated {
             binding.progressBar.isVisible = true
         }
-
-        binding.snacksRV.adapter = adapter
-        binding.snacksRV.layoutManager = GridLayoutManager(requireContext(), 2)
+        binding.apply {
+            snacksRV.adapter = adapter
+            snacksRV.layoutManager = GridLayoutManager(requireContext(), 2)
+            unsuccessfulCallButton.setOnClickListener {
+                binding.progressBar.isVisible = true
+                snacksViewModel.getSnacksFromApi()
+                binding.unsuccessfulCallButton.isVisible = false
+                binding.unsuccessfulCallTv.isVisible = false
+            }
+        }
 
         snacksViewModel.snacksLiveData.observe(viewLifecycleOwner) { snacksList ->
             if (snacksList == null || snacksList.isEmpty()) {
-                Toast.makeText(
-                    requireContext(),
-                    "Unsuccessful network call!",
-                    Toast.LENGTH_SHORT
-                ).show()
+                binding.apply {
+                    unsuccessfulCallButton.isVisible = true
+                    unsuccessfulCallTv.isVisible = true
+                    progressBar.isVisible = false
+                }
                 return@observe
             }
             adapter.differ.submitList(snacksList)

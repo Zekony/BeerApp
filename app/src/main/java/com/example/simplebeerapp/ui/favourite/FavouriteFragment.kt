@@ -9,10 +9,9 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.simplebeerapp.R
-import com.example.simplebeerapp.data.data_source.BeerDB
 import com.example.simplebeerapp.databinding.FragmentFavBinding
 import com.example.simplebeerapp.ui.home.BeerAdapter
-import com.example.simplebeerapp.ui.home.BeerAdapterClockListener
+import com.example.simplebeerapp.ui.core.BeerAdapterClockListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

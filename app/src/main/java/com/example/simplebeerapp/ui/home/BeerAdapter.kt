@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.simplebeerapp.data.entities.Beer
 import com.example.simplebeerapp.databinding.ItemBeerBinding
+import com.example.simplebeerapp.ui.core.BeerAdapterClockListener
 
 class BeerAdapter (val clickListener: BeerAdapterClockListener) :
     RecyclerView.Adapter<BeerAdapter.ViewHolder>() {

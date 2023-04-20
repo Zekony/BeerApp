@@ -1,15 +1,18 @@
 package com.example.simplebeerapp.data.data_source
 
+import android.media.Image
 import android.util.Log
 import com.example.simplebeerapp.data.entities.Beer
 import com.example.simplebeerapp.data.entities.Snack
-import com.example.simplebeerapp.data.network.bodies.Data
-import com.example.simplebeerapp.data.network.bodies.GetSnackById
-import com.example.simplebeerapp.data.network.network_model.ApiClient
-
+import com.example.simplebeerapp.data.network.models.snack.GetSnackById
+import com.example.simplebeerapp.data.network.models.snack.snackBodyToSnack
+import com.example.simplebeerapp.data.network.service.ApiClient
 import javax.inject.Inject
 
-class BeerRepository @Inject constructor(private val dao: BeerDao, private val apiClient: ApiClient) {
+class BeerRepository @Inject constructor(
+    private val dao: BeerDao,
+    private val apiClient: ApiClient
+) {
 
     suspend fun getBeers(): List<Beer> {
         return dao.getBeers()
@@ -38,17 +41,18 @@ class BeerRepository @Inject constructor(private val dao: BeerDao, private val a
     suspend fun deleteBeer(beer: Beer) {
         dao.deleteBeer(beer)
     }
+
     // DB snack functions
 
-    suspend fun addSnack(snack: Snack){
+    suspend fun addSnack(snack: Snack) {
         dao.addSnack(snack)
     }
 
-    suspend fun getSnacks(): List<Snack>{
+    suspend fun getSnacks(): List<Snack> {
         return dao.getSnacks()
     }
 
-    suspend fun deleteAllSnacks(){
+    suspend fun deleteAllSnacks() {
         dao.deleteAllSnacks()
     }
 
@@ -58,25 +62,25 @@ class BeerRepository @Inject constructor(private val dao: BeerDao, private val a
         val request = apiClient.getAllSnacks()
 
         if (request.failed) {
-            Log.d("API", "Request has failed!")
+            Log.d("Repository", "Request has failed! ${request.exception?.message}")
             return null
         }
         if (!request.isSuccessful) {
-            Log.d("API", "Request was not successful!")
+            Log.d("Repository", "Request was not successful!")
             return null
         }
         val snackList = mutableListOf<Snack>()
         for (i in request.body.data) {
-            snackList.add(snackBodyToSnack(i))
+            val snack = snackBodyToSnack(i)
+            snackList.add(snack)
         }
         if (request.isSuccessful) {
-            Log.d("API", "Request was successful!")
+            Log.d("Repository", "Request was successful!")
             if (request.body.data.isEmpty()) {
-                Log.d("API", "Request was successful, but list is empty!")
+                Log.d("Repository", "Request was successful, but list is empty!")
             }
             return snackList
         }
-        Log.d("API", "Request was... i don't know man!")
         return null
     }
 
@@ -94,18 +98,6 @@ class BeerRepository @Inject constructor(private val dao: BeerDao, private val a
             Log.d("API", "Request was successful!")
             return request.body
         }
-        Log.d("API", "Request was... i don't know man!")
         return null
     }
-
-    private fun snackBodyToSnack(snack: Data): Snack {
-        return Snack(
-            UID = snack.UID,
-            name = snack.name,
-            description = snack.description,
-            price = snack.price,
-            type = snack.type
-        )
-    }
-
 }
